@@ -20,7 +20,7 @@ func NewCounterConsumer(tag int8) Consumer[Counter] {
 }
 
 func (c *CounterConsumer) Consume(counter Counter) {
-
+	// Not required for this test
 }
 
 func (c *CounterConsumer) ConsumerKey() interface{} {
