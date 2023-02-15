@@ -7,10 +7,10 @@ type counterChangeNotifier struct {
 	Counter
 }
 
-func NewCounterChangeNotifier() CounterProvider {
+func NewCounterChangeNotifier(initialValue int16) CounterProvider {
 	changeNotifier := counterChangeNotifier{
 		provider.ChangeNotifier[Counter]{},
-		Counter{Value: 0},
+		Counter{Value: initialValue},
 	}
 
 	changeNotifier.ChangeNotifier.Provider = &changeNotifier
