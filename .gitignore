@@ -1,2 +1,4 @@
 .vscode/
+
 go.sum
+go.work.sum
