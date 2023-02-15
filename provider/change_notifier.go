@@ -1,8 +1,6 @@
 package provider
 
-import (
-	"github.com/ephelsa/go-provider/pkg/consumer"
-)
+import "github.com/ephelsa/go-provider/consumer"
 
 type ChangeNotifier[T interface{}] struct {
 	Provider[T]
