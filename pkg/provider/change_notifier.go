@@ -1,7 +1,7 @@
 package provider
 
 import (
-	"github.com/ephelsa/provider/pkg/consumer"
+	"github.com/ephelsa/go-provider/pkg/consumer"
 )
 
 type ChangeNotifier[T interface{}] struct {
