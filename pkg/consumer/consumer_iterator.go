@@ -15,14 +15,12 @@ func (c *ConsumerIterator[T]) AppendAll(consumers ...Consumer[T]) {
 	}
 }
 
-func (c *ConsumerIterator[T]) Remove(consumer Consumer[T]) {
-	for c.HasNext() {
-		if c.GetNext().ConsumerKey() == consumer.ConsumerKey() {
-			if len(c.consumers) == 1 {
-				c.consumers = nil
-				return
-			}
-			c.consumers = append(c.consumers[:c.index], c.consumers[c.index+1])
+func (c *ConsumerIterator[T]) Remove(consumerToRemove Consumer[T]) {
+	for i, consumer := range c.consumers {
+		if consumerToRemove.ConsumerKey() == consumer.ConsumerKey() {
+			tmp := make([]Consumer[T], 0)
+			tmp = append(tmp, c.consumers[:i]...)
+			c.consumers = append(tmp, c.consumers[i+1:]...)
 		}
 	}
 }
