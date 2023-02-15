@@ -2,11 +2,11 @@
 
 This package had been inspired by [Provider by Flutter](https://pub.dev/packages/provider).
 
-Take a look at [Provider's file](/pkg/provider/provider.go) and the official implementations below.
+Take a look at [Provider's file](/provider/provider.go) and the official implementations below.
 
 ## 1.1. `ChangeNotifier`
 
-[ChangeNotifier](/pkg/provider/change_notifier.go) is an implementation of `Provider` which implements:
+[ChangeNotifier](/provider/change_notifier.go) is an implementation of `Provider` which implements:
 
 ### 1.1.1. `Watch(Consumer[T])`
 
@@ -19,6 +19,15 @@ Remove the `Consumer[T]` from the `Consumer[T]` iterator.
 ###  1.1.3. `NotifyConsumers()`
 
 Notify all the `Consumer[T]`s that a change has been done and the updated value is passed via `Consumer[T].Consume(T)` using the `Provider[T].Provide()` which returns a `T`.
+
+For the example, we need to create a structure to manage the state; in this case, it will be `counter.go`.
+
+> **`counter.go`**
+> ```go
+>   type Counter struct {
+>       Value int16
+>   }
+>```
 
 Example of `ChangeNotifier` implementation:
 
@@ -37,7 +46,7 @@ Example of `ChangeNotifier` implementation:
 > 1. `counterchangeNotifier` will implement `CounterProvider`. But also, we're
 > extending to `provider.ChangeNotifier[Counter]`.
 >
-> 2. After create our `changeNotifier` reference, we need to satisfy the `ChangeNotifier.Provider` dependency too ([line 4](/pkg/provider/change_notifier.go)) with the reference that we created (remember step 1.).
+> 2. After create our `changeNotifier` reference, we need to satisfy the `ChangeNotifier.Provider` dependency too ([line 4](/provider/change_notifier.go)) with the reference that we created (remember step 1.).
 >
 > 3. Use `Provider.NotifyConsumers` after do a state update to notify all the consumers.
 >  
@@ -75,7 +84,7 @@ Example of `ChangeNotifier` implementation:
 
 # 2. Consumer
 
-The [Consumer](/pkg/consumer/consumer.go) has to be implemented to listen any changes in a provider.
+The [Consumer](/consumer/consumer.go) has to be implemented to listen any changes in a provider.
 
 All the updates will be streamed in `Consumer[T].Consume(T)`.
 

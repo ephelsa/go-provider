@@ -1,6 +1,6 @@
 package provider
 
-import "github.com/ephelsa/go-provider/pkg/consumer"
+import "github.com/ephelsa/go-provider/consumer"
 
 type Provider[T interface{}] interface {
 	Watch(...consumer.Consumer[T])
