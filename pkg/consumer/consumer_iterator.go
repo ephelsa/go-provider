@@ -9,6 +9,12 @@ func (c *ConsumerIterator[T]) Append(consumer Consumer[T]) {
 	c.consumers = append(c.consumers, consumer)
 }
 
+func (c *ConsumerIterator[T]) AppendAll(consumers ...Consumer[T]) {
+	for _, consumer := range consumers {
+		c.Append(consumer)
+	}
+}
+
 func (c *ConsumerIterator[T]) Remove(consumer Consumer[T]) {
 	for c.HasNext() {
 		if c.GetNext().ConsumerKey() == consumer.ConsumerKey() {

@@ -9,8 +9,8 @@ type ChangeNotifier[T interface{}] struct {
 	consumers consumer.ConsumerIterator[T]
 }
 
-func (c *ChangeNotifier[T]) Watch(consumer consumer.Consumer[T]) {
-	c.consumers.Append(consumer)
+func (c *ChangeNotifier[T]) Watch(consumers ...consumer.Consumer[T]) {
+	c.consumers.AppendAll(consumers...)
 }
 
 func (c *ChangeNotifier[T]) UnWatch(consumer consumer.Consumer[T]) {
