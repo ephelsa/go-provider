@@ -6,7 +6,9 @@ type ConsumerIterator[T interface{}] struct {
 }
 
 func (c *ConsumerIterator[T]) Append(consumer Consumer[T]) {
-	c.consumers = append(c.consumers, consumer)
+	if exist, _ := c.existInConsumers(consumer); !exist {
+		c.consumers = append(c.consumers, consumer)
+	}
 }
 
 func (c *ConsumerIterator[T]) AppendAll(consumers ...Consumer[T]) {
@@ -16,13 +18,22 @@ func (c *ConsumerIterator[T]) AppendAll(consumers ...Consumer[T]) {
 }
 
 func (c *ConsumerIterator[T]) Remove(consumerToRemove Consumer[T]) {
-	for i, consumer := range c.consumers {
-		if consumerToRemove.ConsumerKey() == consumer.ConsumerKey() {
-			tmp := make([]Consumer[T], 0)
-			tmp = append(tmp, c.consumers[:i]...)
-			c.consumers = append(tmp, c.consumers[i+1:]...)
+	exist, index := c.existInConsumers(consumerToRemove)
+	if exist {
+		tmp := make([]Consumer[T], 0)
+		tmp = append(tmp, c.consumers[:index]...)
+		c.consumers = append(tmp, c.consumers[index+1:]...)
+	}
+}
+
+func (c *ConsumerIterator[T]) existInConsumers(consumerToFind Consumer[T]) (bool, int) {
+	for index, consumer := range c.consumers {
+		if exist := consumer.ConsumerKey() == consumerToFind.ConsumerKey(); exist {
+			return exist, index
 		}
 	}
+
+	return false, -1
 }
 
 func (c *ConsumerIterator[T]) HasNext() bool {
