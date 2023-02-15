@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"go-provider/example/changenotifier/counterchangenotifier"
 
-	"github.com/ephelsa/go-provider/pkg/consumer"
+	"github.com/ephelsa/go-provider/consumer"
 )
 
 type counterConsumer struct {

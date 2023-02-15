@@ -1,6 +1,6 @@
 package counterchangenotifier
 
-import "github.com/ephelsa/go-provider/pkg/provider"
+import "github.com/ephelsa/go-provider/provider"
 
 type counterChangeNotifier struct {
 	provider.ChangeNotifier[Counter]
