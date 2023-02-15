@@ -1,0 +1,8 @@
+package consumer
+
+type Iterator[T interface{}] interface {
+	Append(T)
+	Remove(T)
+	HasNext() bool
+	GetNext() T
+}
