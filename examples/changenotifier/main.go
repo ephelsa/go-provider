@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"go-provider/example/changenotifier/counterchangenotifier"
 	"go-provider/example/changenotifier/counterconsumer"
+
+	"github.com/ephelsa/go-provider/consumer"
 )
 
 func main() {
@@ -13,7 +15,14 @@ func main() {
 	consumer2 := counterconsumer.NewCounterConsumer(2)
 	consumer3 := counterconsumer.NewCounterConsumer(3)
 
-	changeNotifier.Watch(consumer1, consumer2, consumer3)
+	spectator := &consumer.Spectator[counterchangenotifier.Counter]{
+		Key: "Spectator",
+		Callback: func(c counterchangenotifier.Counter) {
+			fmt.Printf("Specting counter => %v\n", c)
+		},
+	}
+
+	changeNotifier.Watch(consumer1, consumer2, consumer3, spectator)
 
 	for i := 1; i <= 10; i++ {
 		if i == 5 {

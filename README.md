@@ -42,6 +42,19 @@ The [Consumer](/consumer/consumer.go) has to be implemented to listen any change
 
 All the updates will be streamed in `Consumer[T].Consume(T)`.
 
+## 3.1. Spectator
+
+`Spectator` is a `Consumer` implementation ready-to-use.
+
+>```go
+> spectator := &consumer.Spectator[T]{
+>     Key: interface{},
+>     Callback: func(t T) {
+>         // Code
+>     },
+> }
+>```
+
 #
 
 <a href="https://www.buymeacoffee.com/ephelsa"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=ephelsa&button_colour=3694ff&font_colour=ffffff&font_family=Lato&outline_colour=ffffff&coffee_colour=FFDD00" /></a>

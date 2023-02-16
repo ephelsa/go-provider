@@ -34,11 +34,11 @@ jobs:
         with: 
           filename: coverage.cobertura.xml
           badge: true
-          fail_below_min: true
+          fail_below_min: false
           format: markdown
           indicators: true
           output: both
-          thresholds: '80 90'
+          thresholds: '95'
 
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
@@ -47,3 +47,5 @@ jobs:
           recreate: true
           path: code-coverage-results.md
 
+      - name: Fail if below
+        run: sh scripts/check-coverage.sh
