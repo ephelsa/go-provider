@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
@@ -55,6 +56,13 @@ func NewCounterChangeNotifier() CounterProvider {
 	return &changeNotifier
 }
 
+func NewCounterChangeNotifierWithoutProvider() CounterProvider {
+	return &CounterChangeNotifier{
+		ChangeNotifier[Counter]{},
+		Counter{Value: 10},
+	}
+}
+
 func (p *CounterChangeNotifier) Increment() {
 	p.Counter.Value = p.Counter.Value + 1
 	p.NotifyConsumers()
@@ -91,7 +99,7 @@ func (s *ChangeNotifierTestSuite) SetupTest() {
 	s.Consumer3.On("Consume", mock.AnythingOfType("Counter")).Return(nil)
 }
 
-func (s *ChangeNotifierTestSuite) TestNotifyAllConsumers() {
+func (s *ChangeNotifierTestSuite) TestNotifyConsumers() {
 	// Given
 	s.CounterChangeNotifier.Watch(s.Consumer1, s.Consumer2, s.Consumer3)
 
@@ -106,7 +114,7 @@ func (s *ChangeNotifierTestSuite) TestNotifyAllConsumers() {
 	s.Consumer3.AssertCalled(s.T(), "Consume", expectedCounter)
 }
 
-func (s *ChangeNotifierTestSuite) TestUnWatchAnNotifyAllConsumers() {
+func (s *ChangeNotifierTestSuite) TestUnWatchAnNotifyConsumers() {
 	// Given
 	s.CounterChangeNotifier.Watch(s.Consumer1, s.Consumer2, s.Consumer3)
 
@@ -122,7 +130,7 @@ func (s *ChangeNotifierTestSuite) TestUnWatchAnNotifyAllConsumers() {
 	s.Consumer3.AssertCalled(s.T(), "Consume", expectedCounter)
 }
 
-func (s *ChangeNotifierTestSuite) TestMultipleWatchAndUnWatchAndKeepNotifyAllConsumers() {
+func (s *ChangeNotifierTestSuite) TestMultipleWatchAndUnWatchAndKeepNotifyConsumers() {
 	// Given
 	s.CounterChangeNotifier.Watch(s.Consumer1, s.Consumer2, s.Consumer3)
 
@@ -172,4 +180,14 @@ func (s *ChangeNotifierTestSuite) TestMultipleWatchAndUnWatchAndKeepNotifyAllCon
 
 func TestChangeNotifierTestSuite(t *testing.T) {
 	suite.Run(t, new(ChangeNotifierTestSuite))
+}
+
+func TestNotifyConsumers_ProviderNotSet(t *testing.T) {
+	// Given
+	changeNotifier := NewCounterChangeNotifierWithoutProvider()
+	c1 := NewCounterConsumer(1)
+	changeNotifier.Watch(c1)
+
+	// When & Then
+	assert.Panics(t, changeNotifier.Increment)
 }
