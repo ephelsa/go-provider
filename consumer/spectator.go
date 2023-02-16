@@ -8,7 +8,10 @@ type Spectator[T interface{}] struct {
 type SpectatorFunc[T interface{}] func(T)
 
 func NewSpectator[T interface{}](key interface{}, callback SpectatorFunc[T]) Consumer[T] {
-	return &Spectator[T]{}
+	return &Spectator[T]{
+		Key:      key,
+		Callback: callback,
+	}
 }
 
 func (s *Spectator[T]) Consume(value T) {
