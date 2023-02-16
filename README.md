@@ -1,3 +1,6 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Code Coverage](https://img.shields.io/badge/Code%20Coverage-100%25-success?style=flat)
+
 # 1. Provider
 
 This package had been inspired by [Provider by Flutter](https://pub.dev/packages/provider).
@@ -109,3 +112,7 @@ An example following the last one:
 > 	return struct{ Key string }{Key: "CounterConsumerKey"}  // 1
 > }
 > ```  
+
+#
+
+<a href="https://www.buymeacoffee.com/ephelsa"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=ephelsa&button_colour=3694ff&font_colour=ffffff&font_family=Lato&outline_colour=ffffff&coffee_colour=FFDD00" /></a>
